@@ -7,6 +7,7 @@ Claude Code 사용을 위한 개인 설정 파일 모음입니다.
 
 ```
 .
+├── install.sh             # 설치 스크립트 (→ ~/.claude/ 복사)
 ├── CLAUDE.md              # 글로벌 지시사항 (한국어 응답, 커밋 규칙 등)
 ├── coding-guide.md        # 코딩 가이드 (Tidy First, 코드 스타일)
 ├── commands/
@@ -43,19 +44,32 @@ Claude Code 사용을 위한 개인 설정 파일 모음입니다.
 | `/commit` | 변경사항 분석 → 타입별 분류 → 대화형 커밋 |
 | `/nxtflow-sync` | 커밋 내용을 nxtflow 태스크에 동기화 |
 
+## 설치
+
+```bash
+git clone https://github.com/<your-username>/ella-claude-settings.git
+cd ella-claude-settings
+./install.sh
+```
+
+스크립트가 `~/.claude/` 디렉토리에 설정 파일을 복사합니다.
+- 기존 파일이 있으면 `~/.claude/backups/` 에 자동 백업
+- `nxtflow-sync` 등 개인 서비스 의존 파일은 선택적으로 설치
+
+### 수동 설치
+
+`~/.claude/` 디렉토리에 아래 파일을 직접 배치해도 됩니다:
+- `CLAUDE.md` → `~/.claude/CLAUDE.md`
+- `coding-guide.md` → `~/.claude/coding-guide.md`
+- `commands/` → `~/.claude/commands/`
+- `skills/` → `~/.claude/skills/` (또는 프로젝트 `.claude/skills/`)
+
 ## 사용법
 
 ### 새 프로젝트에서
 ```bash
 # Claude Code에서 /init 실행 → CLAUDE.md 자동 생성
 ```
-
-### 기존 프로젝트에 설정 적용
-`~/.claude/` 디렉토리에 아래 파일을 배치합니다:
-- `CLAUDE.md` → `~/.claude/CLAUDE.md`
-- `coding-guide.md` → `~/.claude/coding-guide.md`
-- `commands/` → `~/.claude/commands/`
-- `skills/` → `~/.claude/skills/` (또는 프로젝트 `.claude/skills/`)
 
 ## 워크플로우
 
