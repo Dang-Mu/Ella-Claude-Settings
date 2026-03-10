@@ -20,6 +20,8 @@ Claude Code 사용을 위한 개인 설정 파일 모음입니다.
         └── SKILL.md       # /init — 코딩 세션 초기화
 ```
 
+> 교육보조 도구(출석부 생성 등)는 별도 저장소 [`edu-assistant/`](../edu-assistant/)에서 관리합니다.
+
 ## 설정 파일 설명
 
 ### CLAUDE.md
