@@ -25,7 +25,7 @@ FILES=(
 )
 
 DIRS=(
-  "commands/commit"
+  "skills/commit"
   "skills/init"
 )
 
@@ -119,7 +119,7 @@ echo ""
 echo "설치된 파일:"
 echo "  ~/.claude/CLAUDE.md"
 echo "  ~/.claude/coding-guide.md"
-echo "  ~/.claude/commands/commit/"
+echo "  ~/.claude/skills/commit/"
 echo "  ~/.claude/skills/init/"
 if $NEED_BACKUP; then
   echo ""

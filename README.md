@@ -11,11 +11,11 @@ Claude Code 사용을 위한 개인 설정 파일 모음입니다.
 ├── CLAUDE.md              # 글로벌 지시사항 (한국어 응답, 커밋 규칙 등)
 ├── coding-guide.md        # 코딩 가이드 (Tidy First, 코드 스타일)
 ├── commands/
-│   ├── commit/
-│   │   ├── commit.md      # /commit — 대화형 커밋 가이드
-│   │   └── rules.md       # 커밋 메시지 규칙 (한글, 타입별 분류)
 │   └── nxtflow-sync.md    # /nxtflow-sync — 작업 내용 nxtflow 동기화
 └── skills/
+    ├── commit/
+    │   ├── SKILL.md       # /commit — 대화형 커밋 가이드
+    │   └── rules.md       # 커밋 메시지 규칙 (한글, 타입별 분류)
     └── init/
         └── SKILL.md       # /init — 코딩 세션 초기화
 ```
@@ -64,7 +64,7 @@ cd ella-claude-settings
 - `CLAUDE.md` → `~/.claude/CLAUDE.md`
 - `coding-guide.md` → `~/.claude/coding-guide.md`
 - `commands/` → `~/.claude/commands/`
-- `skills/` → `~/.claude/skills/` (또는 프로젝트 `.claude/skills/`)
+- `skills/` → `~/.claude/skills/`
 
 ## 사용법
 

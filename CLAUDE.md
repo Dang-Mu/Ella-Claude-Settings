@@ -22,7 +22,7 @@ Always respond in Korean (한국어).
 
 ## 커밋
 - 커밋 메시지는 **한글 1줄** (`타입: 설명`). 정리와 기능을 절대 섞지 말 것.
-- 상세 규칙: `~/.claude/commands/commit/rules.md` 참조.
+- 상세 규칙: `~/.claude/skills/commit/rules.md` 참조.
 - 커밋 시 `/commit` 커맨드 사용 권장.
 
 ## 코딩 가이드

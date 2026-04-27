@@ -17,7 +17,7 @@ description: 변경사항 분석 후 CLAUDE.md 커밋 규칙에 맞춰 대화형
 
 ## STEP 2: 변경사항 분류
 
-1. `~/.claude/commands/commit/rules.md`를 읽어 커밋 규칙을 로드합니다.
+1. `~/.claude/skills/commit/rules.md`를 읽어 커밋 규칙을 로드합니다.
 2. 각 파일의 diff를 분석하여 커밋 타입별로 분류합니다.
 3. 분류 결과를 테이블로 표시합니다:
 
@@ -80,7 +80,7 @@ description: 변경사항 분석 후 CLAUDE.md 커밋 규칙에 맞춰 대화형
 ## STEP 8: Nxtflow 동기화
 
 모든 커밋이 완료되면, `/nxtflow-sync` 커맨드의 워크플로우를 실행합니다.
-(`~/.claude/commands/nxtflow-sync.md` 참조)
+(`~/.claude/skills/nxtflow-sync/SKILL.md` 참조)
 
 ---
 
