@@ -27,6 +27,8 @@ FILES=(
 DIRS=(
   "skills/commit"
   "skills/init"
+  "skills/slide-deck"
+  "skills/slides"
 )
 
 # 선택적 파일 (개인 서비스 의존)
@@ -121,6 +123,8 @@ echo "  ~/.claude/CLAUDE.md"
 echo "  ~/.claude/coding-guide.md"
 echo "  ~/.claude/skills/commit/"
 echo "  ~/.claude/skills/init/"
+echo "  ~/.claude/skills/slide-deck/"
+echo "  ~/.claude/skills/slides/"
 if $NEED_BACKUP; then
   echo ""
   echo "백업 위치: $BACKUP_DIR"

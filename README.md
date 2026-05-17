@@ -16,8 +16,19 @@ Claude Code 사용을 위한 개인 설정 파일 모음입니다.
     ├── commit/
     │   ├── SKILL.md       # /commit — 대화형 커밋 가이드
     │   └── rules.md       # 커밋 메시지 규칙 (한글, 타입별 분류)
-    └── init/
-        └── SKILL.md       # /init — 코딩 세션 초기화
+    ├── init/
+    │   └── SKILL.md       # /init — 코딩 세션 초기화
+    ├── slide-deck/
+    │   ├── SKILL.md       # 1920×1080 Pretendard HTML 슬라이드 데크 작성
+    │   ├── template.html  # 슬라이드 템플릿
+    │   └── catalog.html   # 컴포넌트 카탈로그
+    └── slides/
+        ├── SKILL.md       # /slides — HTML → Canva 디자인 파이프라인
+        ├── render.js      # HTML → PDF (Puppeteer)
+        ├── run.sh         # 렌더 + S3 업로드 + manifest
+        ├── canva_insert.md
+        ├── package.json   # puppeteer 의존성 (최초 호출 시 자동 설치)
+        └── package-lock.json
 ```
 
 > 교육보조 도구(출석부 생성 등)는 별도 저장소 [`edu-assistant/`](../edu-assistant/)에서 관리합니다.
@@ -45,6 +56,8 @@ Claude Code 사용을 위한 개인 설정 파일 모음입니다.
 | `/init` | 프로젝트 CLAUDE.md 생성, Git/Nxtflow 상태 확인 |
 | `/commit` | 변경사항 분석 → 타입별 분류 → 대화형 커밋 |
 | `/nxtflow-sync` | 커밋 내용을 nxtflow 태스크에 동기화 |
+| `/slides` | HTML 슬라이드 → PDF 렌더 → S3 업로드 → Canva 디자인 생성 |
+| `slide-deck` | 1920×1080 Pretendard HTML 슬라이드 데크 작성 (모델 자동 호출) |
 
 ## 설치
 
