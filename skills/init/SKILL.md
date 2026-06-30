@@ -1,6 +1,6 @@
 ---
 name: init
-description: 코딩 세션 초기화 — 프로젝트 CLAUDE.md 생성, Git/Nxtflow 상태 확인
+description: 코딩 세션 초기화 — 프로젝트 AGENTS.md 생성, Git 상태 확인
 disable-model-invocation: true
 user-invocable: true
 ---
@@ -9,10 +9,13 @@ user-invocable: true
 
 ---
 
-## STEP 1: 프로젝트 CLAUDE.md 확인/생성
+## STEP 1: 프로젝트 AGENTS.md 확인/생성
+
+> **기본 산출물은 `AGENTS.md`입니다.** Codex와 Claude Code가 동일한 지침을 읽도록,
+> `AGENTS.md`를 정본으로 만들고 `CLAUDE.md`는 거기로 심링크합니다.
 
 1. `pwd`로 현재 작업 디렉토리를 확인합니다.
-2. 프로젝트 루트에 `.claude/CLAUDE.md` 또는 `CLAUDE.md`가 있는지 확인합니다.
+2. 프로젝트 루트에 `AGENTS.md`(또는 `CLAUDE.md`)가 있는지 확인합니다.
 3. **이미 있으면** → STEP 2로 진행합니다.
 4. **없으면** → 아래 절차로 생성합니다:
 
@@ -24,7 +27,7 @@ user-invocable: true
 - 디렉토리 구조 (`ls src/`, `ls app/` 등 주요 폴더)
 - `README.md` (있으면 프로젝트 설명 참고)
 
-### CLAUDE.md 생성
+### AGENTS.md 생성
 
 수집된 정보가 **있으면**:
 
@@ -57,7 +60,18 @@ user-invocable: true
 {~/.claude/coding-guide.md 내용 전체 삽입}
 ```
 
-`~/.claude/coding-guide.md`를 읽어서 생성할 CLAUDE.md의 맨 아래에 그대로 삽입합니다.
+`~/.claude/coding-guide.md`를 읽어서 생성할 `AGENTS.md`의 맨 아래에 그대로 삽입합니다.
+
+### CLAUDE.md 연결 (심링크)
+
+`AGENTS.md`를 만든 뒤, Claude Code도 같은 내용을 읽도록 심링크를 만듭니다:
+
+```bash
+[ -e CLAUDE.md ] || ln -s AGENTS.md CLAUDE.md
+```
+
+- 이미 `CLAUDE.md`가 일반 파일로 존재하면 덮어쓰지 말고, `AskUserQuestion`으로
+  "기존 CLAUDE.md를 AGENTS.md로 통합할까요?"를 확인한 뒤 처리합니다.
 
 ---
 
@@ -75,27 +89,16 @@ user-invocable: true
 
 ---
 
-## STEP 3: Nxtflow 태스크 확인
-
-1. `mcp__nxtflow__list_projects`로 프로젝트 목록 조회
-2. cwd가 일치하는 프로젝트를 찾습니다.
-3. 매칭되면 → `mcp__nxtflow__list_tasks` (projectId, status: ["open"])로 태스크 조회
-4. 매칭 안 되면 → "nxtflow 프로젝트 미연동" 표시
-
----
-
-## STEP 4: 상황 요약
+## STEP 3: 상황 요약
 
 아래 형식으로 요약을 출력합니다:
 
 ```
 ── init ──────────────────
-프로젝트: {이름} ({CLAUDE.md 생성됨/기존})
+프로젝트: {이름} ({AGENTS.md 생성됨/기존})
 브랜치:   {현재 브랜치}
 변경사항: {n files changed / clean}
-nxtflow:  {태스크 목록 또는 미연동}
 ───────────────────────────
 ```
 
-open 태스크가 있으면 "어떤 태스크를 진행할까요?" 를 `AskUserQuestion`으로 확인합니다.
-없으면 "새 작업을 시작하세요." 로 마무리합니다.
+"새 작업을 시작하세요." 로 마무리합니다.

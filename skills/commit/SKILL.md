@@ -77,13 +77,6 @@ description: 변경사항 분석 후 CLAUDE.md 커밋 규칙에 맞춰 대화형
 
 ---
 
-## STEP 8: Nxtflow 동기화
-
-모든 커밋이 완료되면, `/nxtflow-sync` 커맨드의 워크플로우를 실행합니다.
-(`~/.claude/skills/nxtflow-sync/SKILL.md` 참조)
-
----
-
 ## 주의사항
 
 - Co-Authored-By 헤더는 추가하지 않습니다.

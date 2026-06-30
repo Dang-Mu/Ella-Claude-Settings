@@ -31,11 +31,6 @@ DIRS=(
   "skills/slides"
 )
 
-# 선택적 파일 (개인 서비스 의존)
-OPTIONAL_FILES=(
-  "commands/nxtflow-sync.md"
-)
-
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "  ella-claude-settings 설치"
@@ -97,19 +92,6 @@ for d in "${DIRS[@]}"; do
   mkdir -p "$CLAUDE_DIR/$d"
   cp -r "$SCRIPT_DIR/$d/." "$CLAUDE_DIR/$d/"
   info "$d/"
-done
-
-# 선택적 파일 설치
-echo ""
-for f in "${OPTIONAL_FILES[@]}"; do
-  read -rp "$(echo -e "${YELLOW}[?]${NC}") 선택 설치: $f (nxtflow 연동) [y/N] " answer
-  if [[ "$answer" =~ ^[Yy]$ ]]; then
-    mkdir -p "$(dirname "$CLAUDE_DIR/$f")"
-    cp "$SCRIPT_DIR/$f" "$CLAUDE_DIR/$f"
-    info "$f"
-  else
-    warn "$f 건너뜀"
-  fi
 done
 
 # 완료
