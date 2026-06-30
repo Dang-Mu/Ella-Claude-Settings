@@ -1,0 +1,8 @@
+brew "wget"
+brew "jq"
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "tmux"
+cask "git-credential-manager"
+cask "karabiner-elements"
+cask "codex"

@@ -1,0 +1,15 @@
+# ── 민감정보 (절대 커밋 금지) ──
+# OTEL 토큰 등 — 홈에서 직접 관리
+claude/settings.json
+# ChatGPT 인증 토큰
+codex/auth.json
+# 개인 설정 (모델/엔드포인트 등)
+codex/config.toml
+
+# codex 내장 시스템 스킬 (codex가 자동 관리 — 마이그레이션 불필요)
+codex/skills/.system/
+
+# 백업/임시
+*.backup.*
+*.bak
+.DS_Store
