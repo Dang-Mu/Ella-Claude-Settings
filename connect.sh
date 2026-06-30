@@ -6,6 +6,8 @@ set -euo pipefail
 #   gws : Google Workspace CLI 인증 (구글 작업용)
 #   gh  : GitHub CLI 인증 (깃 커밋/GitHub 작업용)
 #   all : 둘 다
+#
+# 참고: codex 인증은 claude Code 로그인과 마찬가지로 수동입니다 → 'codex login' 직접 실행.
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; NC='\033[0m'
 info()  { echo -e "${GREEN}[✓]${NC} $1"; }
