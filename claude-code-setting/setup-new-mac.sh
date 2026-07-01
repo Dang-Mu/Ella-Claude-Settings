@@ -160,11 +160,11 @@ else
     echo "  -> Claude Code가 설치되어 있지 않아 플러그인 설치를 건너뜁니다."
 fi
 
-# ----- 8. Codex 설정 -----
+# ----- 8. Codex 설치 -----
 echo ""
-echo "[8/9] Codex 설정..."
+echo "[8/9] Codex 설치 확인..."
 
-# Codex 설치 확인 (Brewfile의 cask "codex"로 설치되지만, 누락 시 대비)
+# Codex 바이너리 설치 확인 (Brewfile의 cask "codex"로 설치되지만, 누락 시 대비)
 if ! command -v codex &>/dev/null; then
     echo "  -> Codex 설치 중..."
     brew install codex
@@ -172,31 +172,8 @@ else
     echo "  -> Codex 이미 설치됨: $(codex --version 2>/dev/null)"
 fi
 
-mkdir -p "$HOME/.codex"
-
-# 비민감 설정 복원 (AGENTS.md, hooks.json, skills/, agents/, rules/)
-[ -f "$SCRIPT_DIR/codex/AGENTS.md" ]  && cp "$SCRIPT_DIR/codex/AGENTS.md"  "$HOME/.codex/AGENTS.md"  && echo "  -> AGENTS.md 복원"
-[ -f "$SCRIPT_DIR/codex/hooks.json" ] && cp "$SCRIPT_DIR/codex/hooks.json" "$HOME/.codex/hooks.json" && echo "  -> hooks.json 복원"
-for d in skills agents rules; do
-    if [ -d "$SCRIPT_DIR/codex/$d" ]; then
-        mkdir -p "$HOME/.codex/$d"
-        cp -r "$SCRIPT_DIR/codex/$d/." "$HOME/.codex/$d/"
-        echo "  -> $d/ 복원"
-    fi
-done
-
-# config.toml — 개인 설정으로 repo에 포함되지 않음. 홈 존재 확인 + gws env 안내.
-echo "  -> config.toml 은 개인 설정으로 repo에 없습니다."
-if [ -f "$HOME/.codex/config.toml" ]; then
-    echo "     ✔ 기존 ~/.codex/config.toml 발견 — 그대로 사용합니다."
-else
-    echo "     ⚠ ~/.codex/config.toml 이 없습니다. codex 최초 실행 시 생성됩니다."
-fi
-echo "     ※ codex에서 gws를 안정적으로 쓰려면 config.toml의 [shell_environment_policy.set]에"
-echo "        GOOGLE_WORKSPACE_CLI_KEYRING_BACKEND = \"file\" 을 추가하세요. (gws backend 폴백 방지)"
-
-# Codex 인증 안내 (claude Code 로그인처럼 수동)
-echo "  -> Codex 인증은 'codex login' 으로 직접(수동) 진행하세요."
+# 지침·스킬·설정 배포는 별도 단계에서 codex-install.sh 로 진행 (claude-install.sh와 대칭)
+echo "  -> Codex 지침·스킬 배포는 상위 폴더의 './codex-install.sh' 로 진행하세요."
 
 # ----- 9. 설정 파일 복원 -----
 echo ""
@@ -239,5 +216,6 @@ echo "다음 단계:"
 echo "  1. 터미널을 새로 열거나 'source ~/.zshrc'를 실행하세요."
 echo "  2. 도구 인증: './connect.sh all' (gws, gh)"
 echo "  3. codex 인증: 'codex login' (수동)"
-echo "  4. claude 지침/스킬 배포: 상위 폴더의 './install.sh'"
+echo "  4. claude 지침/스킬 배포: 상위 폴더의 './claude-install.sh'"
+echo "  5. codex 지침/스킬 배포: 상위 폴더의 './codex-install.sh'"
 echo ""
