@@ -40,7 +40,7 @@ Zsh + tmux + Claude Code + Codex 환경을 새 맥으로 그대로 옮기기 위
 ## 2. 설치 순서
 
 ```bash
-# 1) 환경 세팅 (brew, zsh, 폰트, tmux, claude, codex 설치 + 비민감 설정 복원)
+# 1) 환경 세팅 (brew, zsh, 폰트, tmux, claude·codex 바이너리 설치)
 cd ~/{복사한 경로}/claude-code-setting
 chmod +x setup-new-mac.sh
 ./setup-new-mac.sh
@@ -52,8 +52,11 @@ cd ..
 # 3) codex 인증 (수동 — claude 로그인처럼)
 codex login
 
-# 4) claude 지침/스킬 배포
-./install.sh
+# 4) claude 지침/스킬 배포 → ~/.claude/
+./claude-install.sh
+
+# 5) codex 지침/스킬 배포 → ~/.codex/ (commit·init 스킬 포함)
+./codex-install.sh
 ```
 
 > **인증은 왜 수동인가?** OAuth/PAT는 사람의 브라우저 승인·토큰 입력이 필요해 자동화할 수 없습니다. `connect.sh`는 gws/gh를 "안내 + 검증" 반자동으로 돕고, codex는 `codex login`으로 직접 진행합니다.
@@ -72,9 +75,10 @@ codex login
 
 ## 4. Codex 설정
 
-`setup-new-mac.sh`가 codex를 설치하고 `codex/`의 비민감 설정을 `~/.codex/`에 복원합니다.
+`setup-new-mac.sh`는 codex **바이너리**만 설치하고, 지침·스킬·설정 배포는 상위 폴더의 `codex-install.sh`가 `~/.codex/`로 진행합니다 (`claude-install.sh`와 대칭).
 
-- **복원되는 것**: `AGENTS.md`(글로벌 지침), `hooks.json`, `skills/`, `agents/`, `rules/`
+- **배포되는 것**: `AGENTS.md`(글로벌 지침), `hooks.json`, `coding-guide.md`, `skills/`(commit·init), `agents/`, `rules/`
+- **스킬 소스**: `commit`·`init`은 안정성을 위해 `codex/skills/`에 별도 사본으로 보관하며, `~/.claude` 대신 `~/.codex` 경로를 참조하도록 보정돼 있습니다 (Claude 설치 여부와 무관하게 동작).
 - **config.toml** (repo에 없음): codex에서 gws를 안정적으로 쓰려면 `[shell_environment_policy.set]`에 아래를 추가하세요 (claude settings.json env와 동일 역할):
   ```toml
   [shell_environment_policy.set]
@@ -124,14 +128,15 @@ claude-code-setting/
 │   ├── notify.sh
 │   └── statusline.sh
 ├── codex/                      ← 비민감 설정만
-│   ├── AGENTS.md, hooks.json
-│   ├── skills/, agents/, rules/
-│   └── (auth.json·config.toml  ← ⚠️ .gitignore)
+│   ├── AGENTS.md, hooks.json, coding-guide.md
+│   ├── skills/                 ← commit·init (Codex용 사본, ~/.codex 경로로 보정)
+│   ├── agents/, rules/
+│   └── (auth.json·config.toml  ← ⚠️ .gitignore, skills/.system 도 제외)
 ├── karabiner/
 └── fonts/                      ← MesloLGS NF 4종
 ```
 
-(상위 `Ella-Claude-Settings/`에 `connect.sh`, `install.sh`, `CLAUDE.md`가 있습니다.)
+(상위 `Ella-Claude-Settings/`에 `connect.sh`, `claude-install.sh`, `codex-install.sh`, `CLAUDE.md`가 있습니다.)
 
 ---
 

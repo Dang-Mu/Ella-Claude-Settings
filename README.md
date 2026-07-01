@@ -7,7 +7,8 @@ Claude Code 사용을 위한 개인 설정 파일 모음입니다.
 
 ```
 .
-├── install.sh             # 설치 스크립트 (→ ~/.claude/ 복사)
+├── claude-install.sh      # Claude 설정 설치 (→ ~/.claude/)
+├── codex-install.sh       # Codex 설정 설치 (→ ~/.codex/, commit·init 스킬 포함)
 ├── CLAUDE.md              # 글로벌 지시사항 (한국어 응답, 커밋 규칙 등)
 ├── coding-guide.md        # 코딩 가이드 (Tidy First, 코드 스타일)
 └── skills/
@@ -61,11 +62,12 @@ Claude Code 사용을 위한 개인 설정 파일 모음입니다.
 ```bash
 git clone https://github.com/<your-username>/ella-claude-settings.git
 cd ella-claude-settings
-./install.sh
+./claude-install.sh   # Claude 설정 → ~/.claude/
+./codex-install.sh    # Codex 설정 → ~/.codex/ (commit·init 스킬 포함)
 ```
 
-스크립트가 `~/.claude/` 디렉토리에 설정 파일을 복사합니다.
-- 기존 파일이 있으면 `~/.claude/backups/` 에 자동 백업
+각 스크립트가 해당 도구의 홈 디렉토리에 설정을 복사합니다.
+- 기존 파일이 있으면 `~/.claude/backups/` · `~/.codex/backups/` 에 자동 백업
 
 ### 수동 설치
 
