@@ -125,6 +125,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # ─── pipx PATH ───
 export PATH="$PATH:/Users/ull/.local/bin"
 
+# ─── Claude 실행 스크립트 (ella-claude-settings) ───
+export PATH="$HOME/.claude/bin:$PATH"
+
 # ─── MySQL ───
 export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
 

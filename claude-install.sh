@@ -27,6 +27,7 @@ FILES=(
 DIRS=(
   "skills/commit"
   "skills/init"
+  "skills/pingpong"
   "skills/slide-deck"
   "skills/slides"
 )
@@ -94,6 +95,28 @@ for d in "${DIRS[@]}"; do
   info "$d/"
 done
 
+# 실행 스크립트 설치 (~/.claude/bin) + PATH 보장
+echo ""
+echo "실행 스크립트 설치 중..."
+backup_if_exists "bin/pingpong.sh" && info "  백업: bin/pingpong.sh"
+mkdir -p "$CLAUDE_DIR/bin"
+cp "$SCRIPT_DIR/bin/pingpong.sh" "$CLAUDE_DIR/bin/pingpong.sh"
+chmod +x "$CLAUDE_DIR/bin/pingpong.sh"
+info "bin/pingpong.sh"
+
+ZSHRC="$HOME/.zshrc"
+PATH_LINE='export PATH="$HOME/.claude/bin:$PATH"'
+if [ -f "$ZSHRC" ] && grep -qF '.claude/bin' "$ZSHRC"; then
+  info "PATH 이미 설정됨 (~/.claude/bin)"
+else
+  {
+    echo ""
+    echo "# ─── Claude 실행 스크립트 (ella-claude-settings) ───"
+    echo "$PATH_LINE"
+  } >> "$ZSHRC"
+  warn "~/.zshrc 에 PATH 추가함 → 새 셸을 열거나 'source ~/.zshrc' 실행"
+fi
+
 # 완료
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -105,8 +128,10 @@ echo "  ~/.claude/CLAUDE.md"
 echo "  ~/.claude/coding-guide.md"
 echo "  ~/.claude/skills/commit/"
 echo "  ~/.claude/skills/init/"
+echo "  ~/.claude/skills/pingpong/"
 echo "  ~/.claude/skills/slide-deck/"
 echo "  ~/.claude/skills/slides/"
+echo "  ~/.claude/bin/pingpong.sh   (호출: pingpong.sh \"작업 설명\")"
 if $NEED_BACKUP; then
   echo ""
   echo "백업 위치: $BACKUP_DIR"
