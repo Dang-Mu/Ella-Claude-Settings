@@ -11,12 +11,16 @@ Claude Code 사용을 위한 개인 설정 파일 모음입니다.
 ├── codex-install.sh       # Codex 설정 설치 (→ ~/.codex/, commit·init 스킬 포함)
 ├── CLAUDE.md              # 글로벌 지시사항 (한국어 응답, 커밋 규칙 등)
 ├── coding-guide.md        # 코딩 가이드 (Tidy First, 코드 스타일)
+├── bin/
+│   └── pingpong.sh        # Claude ↔ Codex 자동 핑퐁 리뷰 루프 (→ ~/.claude/bin/)
 └── skills/
     ├── commit/
     │   ├── SKILL.md       # /commit — 대화형 커밋 가이드
     │   └── rules.md       # 커밋 메시지 규칙 (한글, 타입별 분류)
     ├── init/
     │   └── SKILL.md       # /init — 코딩 세션 초기화
+    ├── pingpong/
+    │   └── SKILL.md       # /pingpong — 세션 브레인스토밍 후 핑퐁 루프 백그라운드 실행
     ├── slide-deck/
     │   ├── SKILL.md       # 1920×1080 Pretendard HTML 슬라이드 데크 작성
     │   ├── template.html  # 슬라이드 템플릿
@@ -54,8 +58,33 @@ Claude Code 사용을 위한 개인 설정 파일 모음입니다.
 |--------|------|
 | `/init` | 프로젝트 AGENTS.md 생성, Git 상태 확인 |
 | `/commit` | 변경사항 분석 → 타입별 분류 → 대화형 커밋 |
+| `/pingpong` | 세션에서 브레인스토밍 → Claude↔Codex 핑퐁 리뷰 루프를 백그라운드로 실행 |
 | `/slides` | HTML 슬라이드 → PDF 렌더 → S3 업로드 → Canva 디자인 생성 |
 | `slide-deck` | 1920×1080 Pretendard HTML 슬라이드 데크 작성 (모델 자동 호출) |
+
+### 스크립트
+
+**`pingpong.sh`** — Claude ↔ Codex 자동 핑퐁 리뷰 루프 (`~/.claude/bin/`, PATH 등록)
+
+한 라운드 = "Codex 리뷰·수정 → Claude 리뷰·수정". `git worktree`로 만든 격리 사본에서만 작업하며,
+원본 브랜치는 건드리지 않습니다. 안전 모드(풀-바이패스 아님)로 Claude는 `acceptEdits`+도구 화이트리스트,
+Codex는 `--sandbox workspace-write`, 스펙 심판은 `read-only`로 실행됩니다.
+
+```bash
+pingpong.sh "수행할 작업 설명"                          # 수렴할 때까지 (기본 MAX_ROUNDS=5)
+GATE_MODE=test TEST_CMD="npm test" pingpong.sh "리팩토링"  # 테스트 통과를 종료 게이트로
+MAX_ROUNDS=8 GATE_MODE=spec pingpong.sh "스펙 보강"        # SPEC_CRITERIA.md 기준 통과로 종료
+SKIP_BRAINSTORM=1 pingpong.sh "..."                     # STEP 0 브레인스토밍 건너뛰기 (헤드리스)
+```
+
+> **Claude 세션 안에서 편하게 쓰려면** `/pingpong` 스킬을 호출하세요. 세션에서 브레인스토밍을
+> 진행한 뒤 `SKIP_BRAINSTORM=1`로 루프를 백그라운드 실행합니다.
+
+- 진입 전 **브레인스토밍 게이트**(왜·무엇·범위 확정) 후 `y` 확인해야 루프 시작
+- 종료 조건: ①수렴(양쪽 다 수정 없음) ②게이트 통과 ③`MAX_ROUNDS` 도달
+- 로그는 레포 밖(`<worktree>-logs/`)에 기록 → 커밋/머지에 안 섞임
+- 결과 채택: `git merge pingpong/<타임스탬프>` / 폐기: `git worktree remove` + `git branch -D`
+- 선행 조건: `claude`·`codex` CLI 설치 및 로그인
 
 ## 설치
 
@@ -68,6 +97,8 @@ cd ella-claude-settings
 
 각 스크립트가 해당 도구의 홈 디렉토리에 설정을 복사합니다.
 - 기존 파일이 있으면 `~/.claude/backups/` · `~/.codex/backups/` 에 자동 백업
+- `claude-install.sh`는 `pingpong.sh`를 `~/.claude/bin/`에 설치하고, 없으면 `~/.zshrc`에 PATH를 추가합니다
+  (`export PATH="$HOME/.claude/bin:$PATH"`). 설치 후 새 셸을 열거나 `source ~/.zshrc` 하세요.
 
 ### 수동 설치
 
